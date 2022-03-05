@@ -1,3 +1,21 @@
+## Instruções para execução
+
+-Verificar no arquivo .env os detalhes da conexão como nome do banco e porta...
+
+-Criação do banco de dados por meio de migrations executando o comando:
+php artisan migrate
+
+-Popular banco de dados por meio de Seeder/factory executando o comando:
+php artisan db:seed --class=DatabaseSeeder
+
+- Executar o projeto dentro do xampp ou através do comando php artisan serve e rodar qualquer uma dessas rotas que retorna uma lista repectiva.
+http://localhost/teste-desenvolvedor-php/public/clientes/
+http://localhost/teste-desenvolvedor-php/public/produtos/
+http://localhost/teste-desenvolvedor-php/public/pedidos/
+
+-No navBar da parte superior da tela é possivel navegar para outras ações de CRUD.
+
+
 # Teste para candidatos à vaga de Desenvolvedor PHP
 
 Olá desenvolvedor, nesse teste analisaremos seu conhecimento geral. Abaixo explicaremos tudo o que será necessário para você realizar da melhor forma seu teste.
