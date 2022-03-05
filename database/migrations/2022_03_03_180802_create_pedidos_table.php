@@ -14,7 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('pedidos', function (Blueprint $table) {
-            $table->integer('NumeroPedido')->autoIncrement();
+            $table->id();
+            $table->integer('NumeroPedido');
             $table->dateTime('DtPedido', $precision = 0);
             $table->enum('Status',['Em Aberto','Pago','Cancelado']);
             
