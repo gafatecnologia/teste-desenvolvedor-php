@@ -8,14 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Cliente extends Model
 {
     use HasFactory;
+    protected $table = 'clientes';
+    public $timestamps = false;
     protected $fillable = [
+        'id',
         'NomeCliente',
         'EMAIL',
-        'CPF',
+        'CPF'
     ];
 
     public function pedido()
     {
-        return $this->belongsTo(Pedido::class,'ClienteId');
+        return $this->hasMany(Pedido::class,'ClienteId','id');
     }
 }
