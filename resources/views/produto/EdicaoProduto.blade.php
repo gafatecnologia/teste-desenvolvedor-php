@@ -28,7 +28,7 @@
                                     <label>Quantidade</label>
                                     <input type="number" name="Quantidade" class="form-control"required value="{{$produto->Quantidade}}">
                                 </div>
-                                <button type="submit" class="btn btn-primary">Cadastrar</button>
+                                <button type="submit" class="btn btn-primary">Editar</button>
                         </form>
                     </div>
                 </div>

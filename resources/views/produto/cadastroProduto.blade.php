@@ -5,7 +5,7 @@
                 <div class="col-md-8">
                     <div class="card">
                         <h2>Cadastro de produtos</h2>
-                        <form action="{{url('produtos/add')}}" method="POST">
+                        <form action="{{route('produtos.add')}}" method="POST">
                             @csrf
                                 <div class="form-row">
                                 <div class="form-group col-md-6">

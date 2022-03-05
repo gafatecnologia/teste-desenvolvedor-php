@@ -20,6 +20,6 @@ class Produto extends Model
 
     public function pedido()
     {
-        return $this->belongsTo(Pedido::class,'ProdutoId');
+        return $this->hasOne(Pedido::class,'ProdutoId','id');
     }
 }

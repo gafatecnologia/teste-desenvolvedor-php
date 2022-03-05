@@ -10,9 +10,9 @@
                             <thead>
                             <tr>
                                 <th scope="col">id</th>
-                                <th scope="col">CodBarras</th>
-                                <th scope="col">NomeProduto</th>
-                                <th scope="col">ValorUnitario</th>
+                                <th scope="col">Codigo de Barras</th>
+                                <th scope="col">Nome do Produto</th>
+                                <th scope="col">Valor Unitário</th>
                                 <th scope="col">Quantidade</th>
                                 <th scope="col">Editar</th>
                                 <th scope="col">Deletar</th>
