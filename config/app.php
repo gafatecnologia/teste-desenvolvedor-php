@@ -109,6 +109,7 @@ return [
     */
 
     'faker_locale' => 'en_US',
+    'Alert' => 'Prologue\Alerts\Facades\Alert',
 
     /*
     |--------------------------------------------------------------------------
