@@ -18,12 +18,22 @@ const app = createApp({
 
 import {createApp} from 'vue'
 
-require('./bootstrap')
-import App from './App.vue'
-import axios from 'axios'
-import router from './router'
+
+
+import App from './App.vue';
+import Vue from 'vue';
+import axios from 'axios';
+import router from './router';
+import bootstrap from './bootstrap';
+
+
+
 
 const app = createApp(App)
+app.use(bootstrap)
 app.config.globalProperties.$axios = axios;
 app.use(router)
 app.mount('#app')
+
+
+
