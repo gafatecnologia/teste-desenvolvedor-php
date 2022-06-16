@@ -71,17 +71,70 @@
             <div class="col-lg-4 col-md-6 col-sm-8 mx-auto">
                <div v-if="!registerActive" class="card login" v-bind:class="{ error: emptyFields }">
                   <h1>Register</h1>
-                  <form class="form-group">
+                  <!--<form class="form-group">
                      <input v-model="emailLogin" type="email" class="form-control" placeholder="Email" required>
                      <input v-model="passwordLogin" type="password" class="form-control" placeholder="Password" required>
                      <input type="submit" class="btn btn-primary" @click="doLogin">
                      <p>Don't have an account? <a href="#" @click="registerActive = !registerActive, emptyFields = false">Sign up here</a>
                      </p>
                      <p><a href="#">Forgot your password?</a></p>
+                  </form>-->
+
+                  <form
+                    id="form"
+                    @submit="checkForm"
+                    @submit.prevent="register"
+                    method="post"
+                    class="form-group"
+                  >
+                    <p>
+                      <label for="name">Nome</label>
+                      <input
+                        id="name"
+                        v-model="name"
+                        type="text"
+                        name="name"
+                        class="form-control"
+                      >
+                    </p>
+                    <p>
+                      <label for="name">Email</label>
+                      <input
+                        id="email"
+                        v-model="email"
+                        type="text"
+                        name="email"
+                        class="form-control"
+                      >
+                    </p>
+                    <p>
+                      <label for="name">Senha</label>
+                      <input
+                        id="password"
+                        v-model="password"
+                        type="password"
+                        name="password"
+                        class="form-control"
+                      >
+                    </p>
+                    <p>
+                      <label for="name">Confirmação de Senha</label>
+                      <input
+                        id="confirm_password"
+                        v-model="confirm_password"
+                        type="password"
+                        name="confirm_password"
+                        class="form-control"
+                      >
+                    </p>
+                    <input type="submit" class="btn btn-primary" @click="doRegister">
+                    <p>Don't have an account? <a href="#" @click="registerActive = !registerActive, emptyFields = false">Sign up here</a>
+                    </p>
+                    <p><a href="#">Forgot your password?</a></p>
                   </form>
                </div>
 
-               <div v-else class="card register" v-bind:class="{ error: emptyFields }">
+               <!--<div v-else class="card register" v-bind:class="{ error: emptyFields }">
                   <h1>Sign Up</h1>
                   <form class="form-group">
                      <input v-model="emailReg" type="email" class="form-control" placeholder="Email" required>
@@ -91,7 +144,7 @@
                      <p>Already have an account? <a href="#" @click="registerActive = !registerActive, emptyFields = false">Sign in here</a>
                      </p>
                   </form>
-               </div>
+               </div>-->
             </div>
          </div>
 
@@ -104,7 +157,7 @@
  
 <script>
  
-
+const axios = require('axios');
 
 export default {
     components: {
@@ -114,16 +167,67 @@ export default {
     data() {
         return {
         form: {
+                name: "",
                 email: "",
-                password: ""
+                password: "",
+                confirm_password: ""
             }
         }
     },
  
   methods: {
+    checkForm: function (e) {
+      if (this.name && this.email && this.password && this.confirm_password) {
+        return true;
+      }
+
+      this.errors = [];
+
+      if (!this.name) {
+        this.errors.push('O nome é obrigatório.');
+      }
+      if (!this.email) {
+        this.errors.push('Insira um email.');
+      }
+
+      if (!this.password) {
+        this.errors.push('A senha é obrigatória.');
+      }
+
+      if (!this.confirm_password) {
+        this.errors.push('A confirmação de senha é obrigatória.');
+      }
+
+      if (this.confirm_password != this.confirm_password) {
+        this.errors.push('Confirme a mesma senha.');
+      }
+      
+      this.register();
+
+      e.preventDefault();
+    },
+
     login() {},
  
-    register() {},
+    register(){
+      let formData = new FormData();
+
+      formData.append("name", this.name);
+      formData.append("email", this.email);
+      formData.append("password", this.password);
+      formData.append("password_confirmation", this.confirm_password);
+
+      axios.post("/api/register", formData)
+      .then((response) => {
+        if(response.status===201)
+        {
+          this.$router.push('/login');
+          
+        }
+      });
+    },
+
+    
  
   }
 }
