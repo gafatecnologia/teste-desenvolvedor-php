@@ -13,6 +13,7 @@ import CreateProduct from '../components/products/Create.vue'
 import Requests from '../components/requests/List.vue'
 import CreateRequest from '../components/requests/Create.vue'
 import EditRequest from '../components/requests/Edit.vue'
+import Request from '../components/requests/Show.vue'
 import Login from '../components/auth/Login.vue'
 import Register from '../components/auth/Register.vue'
 import Error from '../components/error/Error.vue'
@@ -104,7 +105,13 @@ const routes = [
         name: 'edit-requests',
         component: EditRequest
     },
+    {
+        path: '/request/:id',
+        name: 'request',
+        component: Request
+    },
 ];
+
 
 export default createRouter({
     history: createWebHistory(),

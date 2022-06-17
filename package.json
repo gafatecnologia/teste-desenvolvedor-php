@@ -30,6 +30,7 @@
     },
     "dependencies": {
         "bootstrap-vue-3": "^0.1.13",
+        "laravel-vue-pagination": "^3.0.0",
         "postcss-loader": "^7.0.0",
         "sweetalert2": "^11.4.17",
         "vue-axios": "^3.4.1",

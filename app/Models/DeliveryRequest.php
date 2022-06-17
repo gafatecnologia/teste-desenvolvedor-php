@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class DeliveryRequest extends Model
 {
@@ -22,7 +23,7 @@ class DeliveryRequest extends Model
     public function scopeRequest($query){
         return $query->join('users', 'requests.user_id', '=', 'users.id')
         ->join('products', 'requests.product_id', '=', 'products.id')
-        ->select('requests.*','users.name','products.name as product_name', 'products.unitary_value');
+        ->select('requests.*',DB::raw("DATE_FORMAT(requests.created_at, '%d/%m/%Y') as formatted_date"),'users.name','products.name as product_name', 'products.unitary_value');
     }
 
 }

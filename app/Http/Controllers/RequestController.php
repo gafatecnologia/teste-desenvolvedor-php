@@ -18,9 +18,61 @@ class RequestController extends BaseController {
         *
         * @return Response
         */
-    public function index()
+    public function index(Request $request)
     {
-        $requests = DeliveryRequest::request()->get();
+        $requests=DeliveryRequest::request()
+        ->where(function($query) use ($request)
+        {
+
+            if ($request->has('product')) {
+                $query->join('requests.product_id', '=', 'products.id')->where('requests.product_id','=',$request->product);
+            }
+
+            if ($request->has('user')) {
+                $query->join('requests.user_id', '=', 'users.id')->where('requests.user_id','=',$request->user);
+            }
+
+            if ($request->has('status')) {
+                $query->where('requests.status','=',$request->status);
+            }
+
+            if ($request->has('amount')) {
+                $query->where('requests.amount','=',$request->amount);
+            }
+
+            if ($request->has('date')) {
+                $query->where('requests.created_at','like', '%'.$request->date .'%');
+            }
+        })->paginate($request->qtdPerPage);
+
+        if ($request->has('order')) {
+            if($request->order==="4"){
+                $item = ['requests' => DeliveryRequest::request()->orderBy('status', 'asc')->paginate($request->qtdPerPage)];
+                return response()->json($item,200);
+            }
+
+            if($request->order==="1"){
+                $item = ['requests' => DeliveryRequest::request()->orderBy('product_id', 'asc')->paginate($request->qtdPerPage)];
+                return response()->json($item,200);
+            }
+
+            if($request->order==="2"){
+                $item = ['requests' => DeliveryRequest::request()->orderBy('user_id', 'asc')->paginate($request->qtdPerPage)];
+                return response()->json($item,200);
+            }
+
+            if($request->order==="3"){
+                $item = ['requests' => DeliveryRequest::request()->orderBy('amount', 'asc')->paginate($request->qtdPerPage)];
+                return response()->json($item,200);
+            }
+
+            if($request->order==="5"){
+                $item = ['requests' => DeliveryRequest::request()->orderBy('created_at', 'asc')->paginate($request->qtdPerPage)];
+                return response()->json($item,200);
+            }
+            
+
+        }
 
         $item = ['requests' => $requests];
         return response()->json($item,200);
@@ -64,7 +116,7 @@ class RequestController extends BaseController {
         */
     public function show($id)
     {
-        $deliveryRequest = DeliveryRequest::find($id);
+        $deliveryRequest = DeliveryRequest::request()->find($id);
 
         $item = ['request' => $deliveryRequest];
         return response()->json($item,200);
@@ -101,13 +153,13 @@ class RequestController extends BaseController {
         * @param  int  $id
         * @return Response
         */
-    public function destroy($id)
+    public function destroy($id,Request $request)
     {
         $deliveryRequest = DeliveryRequest::find($id);
         $deliveryRequest->delete();
         
         
-        $deliveryRequests = DeliveryRequest::request()->get();
+        $deliveryRequests = DeliveryRequest::request()->paginate($request->qtdPerPage);
 
         $item = ['requests' => $deliveryRequests];
         return response()->json($item,200);

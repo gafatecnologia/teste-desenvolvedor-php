@@ -41,6 +41,17 @@
                         disabled=""
                       >
                     </p>
+                    <p>
+                      <label for="name">Data de realização</label>
+                      <input
+                        id="date"
+                        v-model="date"
+                        type="text"
+                        name="date"
+                        class="form-control"
+                        disabled=""
+                      >
+                    </p>
                 </form>
             </div>
 </template>
@@ -59,6 +70,7 @@ export default {
             name: "",
             bar_code: "",
             unitary_value: "",
+            date: "",
 
         }
     },
@@ -69,6 +81,7 @@ export default {
             this.name=response.data.product.name
             this.bar_code=response.data.product.bar_code
             this.unitary_value=response.data.product.unitary_value
+            this.date=response.data.product.formatted_date
         });
     },
 

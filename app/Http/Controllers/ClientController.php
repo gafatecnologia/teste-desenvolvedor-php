@@ -17,9 +17,39 @@ class ClientController extends BaseController {
         *
         * @return Response
         */
-    public function index()
+    public function index(Request $request)
     {
-        $clients = User::get();
+        $clients = User::user()->where( function($query) use ($request){
+            if ($request->has('name')) {
+                $query->where('users.name','like', '%'.$request->name .'%');
+            }
+
+            if ($request->has('email')) {
+                $query->where('users.email','like', '%'.$request->email .'%');
+            }
+
+            if ($request->has('date')) {
+                $query->where('users.created_at','like', '%'.$request->date .'%');
+            }
+        })
+        ->paginate($request->qtdPerPage);
+
+        if ($request->has('order')) {
+            if($request->order==="1"){
+                $item = ['clients' => User::user()->orderBy('name', 'asc')->paginate($request->qtdPerPage)];
+                return response()->json($item,200);
+            }
+
+            if($request->order==="2"){
+                $item = ['clients' => User::user()->orderBy('email', 'asc')->paginate($request->qtdPerPage)];
+                return response()->json($item,200);
+            }
+
+            if($request->order==="3"){
+                $item = ['clients' => User::user()->orderBy('created_at', 'asc')->paginate($request->qtdPerPage)];
+                return response()->json($item,200);
+            }
+        }
 
         $item = ['clients' => $clients];
         return response()->json($item,200);
@@ -62,7 +92,7 @@ class ClientController extends BaseController {
         */
     public function show($id)
     {
-        $client = User::find($id);
+        $client = User::user()->find($id);
 
         $item = ['client' => $client];
         return response()->json($item,200);
@@ -98,13 +128,13 @@ class ClientController extends BaseController {
         * @param  int  $id
         * @return Response
         */
-    public function destroy($id)
+    public function destroy($id,Request $request)
     {
         $client = User::find($id);
         $client->delete();
         
         
-        $clients = User::get();
+        $clients = User::user()->paginate($request->qtdPerPage);
 
         $item = ['clients' => $clients];
         return response()->json($item,200);

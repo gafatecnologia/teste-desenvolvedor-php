@@ -128,9 +128,9 @@ export default {
         },
 
         onChangeProduct(event){
-            console.log(event.target.value);
             this.id_product=event.target.value;
         },
+
 
         onChangeUser(event){
             this.id_user=event.target.value;

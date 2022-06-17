@@ -31,6 +31,18 @@
                       >
                     </p>
 
+                    <p>
+                      <label for="name">Data de Criação</label>
+                      <input
+                        id="data"
+                        v-model="data"
+                        type="text"
+                        name="email"
+                        class="form-control"
+                        disabled=""
+                      >
+                    </p>
+
                 </form>
             </div>
 </template>
@@ -48,6 +60,7 @@ export default {
 
             name: "",
             email: "",
+            data:""
 
         }
     },
@@ -57,6 +70,7 @@ export default {
         axios.get("/api/clients/"+this.$route.params.id).then((response) => {
             this.name=response.data.client.name
             this.email=response.data.client.email
+            this.data=response.data.client.formatted_date
         });
     },
 

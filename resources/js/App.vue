@@ -31,10 +31,12 @@
 
 <script>
 import NavBar from "./components/navbar/NavBar.vue"
+import pagination from 'laravel-vue-pagination'
 
 export default {
   components: {
-    NavBar
+    NavBar,
+    pagination
   }
 }
 </script>

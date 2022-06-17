@@ -16,9 +16,50 @@ class ProductController extends BaseController {
         *
         * @return Response
         */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::get();
+        $products = Product::product()->where(
+            function($query) use ($request){
+                if ($request->has('name')) {
+                    $query->where('products.name','like', '%'.$request->name .'%');
+                }
+
+                if ($request->has('bar_code')) {
+                    $query->where('products.bar_code','like', '%'.$request->bar_code .'%');
+                }
+
+                if ($request->has('unitary_value')) {
+                    $query->where('products.unitary_value','like', '%'.$request->unitary_value .'%');
+                }
+
+                if ($request->has('date')) {
+                    $query->where('products.created_at','like', '%'.$request->date .'%');
+                }
+            }
+        )
+        ->paginate($request->qtdPerPage);
+
+        if ($request->has('order')) {
+            if($request->order==="1"){
+                $item = ['products' => Product::product()->orderBy('name', 'asc')->paginate($request->qtdPerPage)];
+                return response()->json($item,200);
+            }
+
+            if($request->order==="2"){
+                $item = ['products' => Product::product()->orderBy('bar_code', 'asc')->paginate($request->qtdPerPage)];
+                return response()->json($item,200);
+            }
+
+            if($request->order==="3"){
+                $item = ['products' => Product::product()->orderBy('unitary_value', 'asc')->paginate($request->qtdPerPage)];
+                return response()->json($item,200);
+            }
+
+            if($request->order==="4"){
+                $item = ['products' => Product::product()->orderBy('created_at', 'asc')->paginate($request->qtdPerPage)];
+                return response()->json($item,200);
+            }
+        }
 
         $item = ['products' => $products];
         return response()->json($item,200);
@@ -60,7 +101,7 @@ class ProductController extends BaseController {
         */
     public function show($id)
     {
-        $product = Product::find($id);
+        $product = Product::product()->find($id);
 
         $item = ['product' => $product];
         return response()->json($item,200);
@@ -97,13 +138,13 @@ class ProductController extends BaseController {
         * @param  int  $id
         * @return Response
         */
-    public function destroy($id)
+    public function destroy($id,Request $request)
     {
         $product = Product::find($id);
         $product->delete();
         
         
-        $products = Product::get();
+        $products = Product::product()->paginate($request->qtdPerPage);
 
         $item = ['products' => $products];
         return response()->json($item,200);
