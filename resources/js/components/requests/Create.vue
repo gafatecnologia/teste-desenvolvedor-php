@@ -9,7 +9,7 @@
                     class="form-group"
                   >
 
-                    <p>
+                    
                         <label for="name">Produto</label>
                         <div>
                             <select name="cars_id" @change="onChangeProduct($event)" class="form-select form-control">
@@ -19,8 +19,8 @@
                             </select>
 
                         </div>
-                    </p>
-                    <p>
+                    
+                    
                         <label for="name">Usuario</label>
                         <div>
                             <select name="cars_id" @change="onChangeUser($event)" class="form-select form-control">
@@ -30,7 +30,7 @@
                             </select>
 
                         </div>
-                    </p>
+                    
                     <p>
                       <label for="name">Quantiadde</label>
                       <input
