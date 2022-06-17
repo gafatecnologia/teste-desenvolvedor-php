@@ -1,0 +1,7 @@
+#navbarSupportedContent {
+    margin:20px;
+    &:hover {
+        color:rgb(255, 17, 0);
+        cursor: pointer;
+    }
+}

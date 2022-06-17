@@ -1,71 +1,30 @@
-# Teste para candidatos à vaga de Desenvolvedor PHP
+# Executando o ambiente
+Olá, para conseguir rodar esta aplicação, é necessario configurar o ambiente Docker.
+Primeiro assegure-se de ter o docker instalado. O arquivo docker-compose.yml conta com uma imagem do MySQL, PHPMyAdmin, e algumas outras imagens que podem auxiliar em projetos laravel como o Selenium e o Redis.
 
-Olá desenvolvedor, nesse teste analisaremos seu conhecimento geral. Abaixo explicaremos tudo o que será necessário para você realizar da melhor forma seu teste.
+- Primeiro crie um arquivo .env na sua pasta raiz. Copie o conteudo do arquivo .env.example para o arquivo .env recem criado.
+- Execute o composer install e depois o yarn install (ou npm install).
+- Se as configurações forem executadas corretamente, poderemos passar para a parte de povoamento do banco de dados.
+- Juntamente com o comando do Docker execute o comando * php artisan migrate *.
+- Você pode conferir se as tabelas foram criadas acessando o PHPMyAdmin que estara sendo executado na porta 8081. As credenciais estão informadas no arquivo .env, "usuario":"sail" - "senha":"password".
+- Com o banco de dados devidamente criado e as tabelas presentes, resta apenas inserir informações nelas por meio de seeders. Execute o comando * php artisan migrate * php artisan db:seed * e depois que ele terminar de popular as tabelas, podemos acessar a aplicação.
 
-## Instruções
+- O sistema foi construido com um front-end em VUE.js, com JavaScript e scss. A API foi construida com o Laravel, gerando apenas as informações em JSON para serem consumidas pelas paginas VUE. Como Vue é outra tecnologia, é preciso executar o comando * yarn watch * para executar o front e logo em segura acesse a rota raiz localhost.
 
-O desafio consiste em implementar uma aplicação Web simples utilizando o framework PHP Laravel, e um banco de dados relacional MySQL ou Postgres, a partir de uma modelagem de dados inicial.
+- O sistema contem 3 CRUD's, sendo um de Produtos, outro de Clientes e outro de Pedidos interagindo entre as tabelas.
 
-Você vai criar uma aplicação de cadastro de pedidos de compra, com as seguintes funcionalidades:
+# O CRUD de Produtos
 
-- CRUD de clientes.
-- CRUD de produtos.
-- CRUD de pedidos de compra, com status (Em Aberto, Pago ou Cancelado).
-- Cada CRUD:
-  - deve ser filtrável e ordenável por qualquer campo, e possuir paginação de 20 itens.
-  - deve possuir formulários para criação e atualização de seus itens.
-  - deve permitir a deleção de qualquer item de sua lista.
-- Barra de navegação entre os CRUDs.
-- Links para os outros CRUDs nas listagens (Ex: link para o detalhe do cliente da compra na lista de pedidos de compra)
+- O CRUD de Produtos conta com uma listagem de todos os produtos cadastrados no banco de dados, dando a opção de excluir, editar, e visualizar a informação referente a uma determinada linha na tabela.
 
+- É possivel fazer filtragem tanto pelo nome do produto, quanto pelo codigo de barras ou data que deseje verificar.
 
-## Modelo de dados
+# O CRUD de Clientes
 
-A modelagem inicial para a implementação solução é a seguinte:
+- O CRUD de Clientes conta com uma listagem de todos os clientes cadastrados no banco de dados, dando a opção de excluir, editar, e visualizar a informação referente a uma determinada linha na tabela.
 
-| Nome Coluna         |  Data Type          |
-| ------------------- | ------------------- |
-|  NumeroPedido       |  int                |
-|  NomeCliente        |  Varchar(100)       |
-|  CPF                |  char(11)           |
-|  EMAIL              |  nchar(10)          |
-|  DtPedido           |  smalldatetime      |
-|  CodBarras          |  varchar(20)        |
-|  NomeProduto        |  varchar(100)       |
-|  ValorUnitario      |  money              |
-|  Quantidade         |  int                |
+- É possivel fazer filtragem tanto pelo nome do produto, quanto pelo email ou data que deseje verificar.
 
-Além disso, a implementação deste modelo em um banco de dados relacional deve ser realizada levando em consideração os seguintes requisitos:
+# O CRUD de Clientes
 
-- O banco de dados deve ser criado utilizando Migrations do framework Laravel, e também utilizar Seeds e Factorys para popular as informações no banco de dados.
-- Implementação das validações necessárias na camada que julgar melhor.
-
-## Tecnologias a serem utilizadas
-Devem ser utilizadas as seguintes tecnologias:
-
-- HTML
-- CSS
-- Javascript
-- Framework Laravel (PHP)
-- Docker (se souber para montar o ambiente de dev)
-
-## Entrega
-
-- Para iniciar o teste, faça um fork deste repositório; 
-- Crie uma branch com o seu nome;
-- Altere o arquivo readme.md com as informações necessárias para executar o seu teste e caso queira colocar alguma instrução a mais;
-- Depois de finalizado, envie-nos o pull request;
-
-## Bônus
-
-- Permitir que o usuário mude o número de itens por página.
-- Implementar a camada de Front-End utilizando a biblioteca javascript Bootstrap e ser responsiva.
-- API Rest JSON para todos os CRUDS listados acima.
-
-## O que iremos analisar
-
-- Organização do código;
-- Aplicação de design patterns;
-- Separação de módulos e componentes;
-
-### Boa sorte!
+- O CRUD de Pedidos funciona de forma um pouco mais diferenciada já que conta com as mesmas especificidades dos CRUD's anteriores, mas com mais filtros e mais informações, como status do pedido, filtragem por cliente, por produto e pelo status. Com as informações já inseridas é possivel testar, e ver as funcionalidades. Se um Cliente ou Produto for excluido, o pedido referente a ele tambem será.
